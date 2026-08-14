@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Imagine — made from your memories. Personalized magnets and buttons made from your favorite photos.">
+<title>Imagine — Made from your memories</title>
+<style>
+:root{
+  --bg:#f8f3ee; --surface:#fffdfb; --ink:#26384a; --muted:#6f6a68;
+  --accent:#b77a5a; --accent-dark:#9c6248; --line:#e5d8d1; --soft:#f2e7e2;
+  --rose:#d9a6a1; --sage:#b8bba0; --blue:#aebfd0; --cream:#f8f3ee;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+a{text-decoration:none;color:inherit}
+.container{width:min(1120px,92%);margin:auto}
+nav{position:sticky;top:0;z-index:20;background:rgba(248,243,238,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:800;letter-spacing:-.04em;font-size:22px}
+.brand span{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.navlinks{display:flex;gap:24px;font-size:14px;color:#4d4f4a;align-items:center}
+.lang{display:flex;gap:4px;background:white;border:1px solid var(--line);border-radius:999px;padding:3px}
+.lang button{border:0;background:transparent;border-radius:999px;padding:7px 10px;font:inherit;font-size:12px;font-weight:750;cursor:pointer;color:var(--muted)}
+.lang button.active{background:var(--lilac-soft);color:#63527f}
+.hero{padding:78px 0 65px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:55px;align-items:center}
+.kicker{text-transform:uppercase;letter-spacing:.18em;font-size:12px;color:var(--accent-dark);font-weight:800}
+h1{font-size:clamp(48px,7vw,82px);line-height:.95;letter-spacing:-.065em;margin:15px 0 20px}
+.hero p{font-size:19px;color:var(--muted);max-width:560px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:14px 22px;font-weight:750;font-size:14px;border:1px solid var(--line);cursor:pointer}
+.btn-primary{background:var(--accent);color:white;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-dark)}
+.btn-light{background:white}
+.hero-card{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:18px;box-shadow:0 18px 50px rgba(32,33,31,.07)}
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.photo{aspect-ratio:1/1;border-radius:18px;background:linear-gradient(135deg,#dff3ef,#eee8f6);display:grid;place-items:center;color:#6c736d;font-weight:700}
+.photo.tall{grid-row:span 2;aspect-ratio:auto;min-height:360px}
+.section{padding:75px 0}
+.section-head{display:flex;justify-content:space-between;gap:25px;align-items:end;margin-bottom:28px}
+h2{font-size:clamp(34px,5vw,52px);line-height:1;letter-spacing:-.05em;margin:8px 0}
+.section-head p{max-width:500px;color:var(--muted)}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.product{background:white;border:1px solid var(--line);border-radius:24px;padding:22px}
+.product-image{height:260px;border-radius:18px;background:linear-gradient(135deg,#dff3ef,#eee8f6);display:grid;place-items:center;color:#666d67;font-weight:700;margin-bottom:18px}
+.product h3{font-size:24px;margin:0 0 6px}
+.product p{color:var(--muted);margin-top:0}
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.price{background:white;border:1px solid var(--line);border-radius:20px;padding:20px}
+.price strong{display:block;font-size:25px}
+.price span{color:var(--muted);font-size:14px}
+.custom{background:var(--ink);color:white;border-radius:28px;padding:42px}
+.custom p{color:#c9cbc6}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.step{background:white;border:1px solid var(--line);border-radius:20px;padding:23px}
+.num{font-size:12px;color:var(--accent-dark);font-weight:800;letter-spacing:.15em}
+.portfolio{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.portfolio .photo{min-height:220px}
+.order{background:linear-gradient(135deg,#e7f4f1,#eee9f6);border-radius:28px;padding:38px}
+form{display:grid;gap:13px}
+input,select,textarea{width:100%;border:1px solid #d5d7d2;background:white;border-radius:13px;padding:14px;font:inherit}
+textarea{min-height:100px;resize:vertical}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+footer{padding:40px 0;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+
+.photo-showcase{position:relative;overflow:hidden;background:linear-gradient(135deg,#dff3ef,#eee8f6)!important}
+.mock-photo{position:absolute;width:130px;height:130px;border-radius:18px;display:grid;place-items:center;text-align:center;font-weight:850;letter-spacing:.08em;color:white;box-shadow:0 12px 30px rgba(35,35,40,.18);font-size:15px}
+.mock-photo small{font-size:9px;letter-spacing:.04em;font-weight:650}
+.mock-photo.family{left:16%;top:22%;transform:rotate(-7deg);background:linear-gradient(145deg,#7fb8a9,#b9a9d2)}
+.mock-photo.travel{right:16%;top:22%;transform:rotate(7deg);background:linear-gradient(145deg,#78a9c4,#a6c3a7)}
+.shape-badge{position:absolute;background:rgba(255,255,255,.92);border:1px solid var(--line);padding:7px 10px;border-radius:999px;font-size:9px;font-weight:850;letter-spacing:.1em;color:#5f5968}
+.shape-badge.circle{left:9%;bottom:14%}.shape-badge.square{right:9%;bottom:14%}
+.example-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.example-card{background:white;border:1px solid var(--line);border-radius:22px;padding:14px}
+.example-art{height:230px;border-radius:16px;position:relative;overflow:hidden;display:grid;place-items:center;background:#e9ebe7}
+.family-art{background:linear-gradient(145deg,#cfe7df,#e8def3)}
+.travel-art{background:linear-gradient(145deg,#c9e2ee,#e6edda)}
+.celebration-art{background:linear-gradient(145deg,#e9d8ea,#f0e4c9)}
+.pet-art{background:linear-gradient(145deg,#d7e8df,#e9e0cf)}
+.round-magnet,.square-magnet{width:94px;height:94px;display:grid;place-items:center;text-align:center;color:white;font-weight:850;font-size:12px;letter-spacing:.08em;box-shadow:0 10px 22px rgba(30,30,30,.18)}
+.round-magnet{border-radius:50%;background:linear-gradient(145deg,#668f85,#a28fbf);position:absolute;left:14%;top:28%;transform:rotate(-8deg)}
+.square-magnet{border-radius:15px;background:linear-gradient(145deg,#6f9cb4,#7da895);position:absolute;right:14%;top:27%;transform:rotate(8deg)}
+.example-card h3{margin:16px 4px 5px;font-size:19px}.example-card p{margin:0 4px 7px;color:var(--muted);font-size:13px}
+@media(max-width:800px){
+ .hero-grid{grid-template-columns:1fr}.navlinks{display:none}.hero{padding-top:52px}
+ .products,.pricing,.steps,.example-grid{grid-template-columns:1fr}.portfolio{grid-template-columns:1fr 1fr}
+ .form-grid{grid-template-columns:1fr}.section{padding:55px 0}
+}
+
+.brand img{display:block;width:155px;height:auto;max-height:58px;object-fit:contain}
+.hero-card,.product,.price,.step,.example-card{box-shadow:0 12px 35px rgba(73,51,43,.06)}
+.photo,.product-image{background:linear-gradient(135deg,#f1ddd8,#e5eadb 55%,#dbe5ed)}
+.photo-showcase{background:linear-gradient(135deg,#f1ddd8,#e5eadb 55%,#dbe5ed)!important}
+.order{background:linear-gradient(135deg,#f3e0dc,#e7eadc 55%,#dfe8ef)}
+.btn-primary{box-shadow:0 8px 18px rgba(183,122,90,.18)}
+.logo-note{font-size:13px;color:var(--muted);margin-top:10px}
+.payment-note{background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:15px;padding:14px 16px;color:var(--ink);font-size:14px}
+
+
+/* Imagine logo background branding */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(248,243,238,.90),rgba(248,243,238,.90)),
+    url("imagine-logo.jpeg") center 22% / min(720px,82vw) auto no-repeat;
+  opacity:.92;
+}
+main{position:relative}
+.section{position:relative}
+.section::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:min(560px,72vw);
+  height:360px;
+  transform:translate(-50%,-50%);
+  background:url("imagine-logo.jpeg") center / contain no-repeat;
+  opacity:.055;
+  pointer-events:none;
+  z-index:-1;
+}
+.brand img{
+  display:block;
+  width:190px;
+  height:auto;
+  max-height:64px;
+  object-fit:contain;
+  border-radius:8px;
+}
+.hero-logo{
+  display:block;
+  width:min(430px,86%);
+  margin:0 auto 14px;
+  border-radius:20px;
+  box-shadow:0 18px 45px rgba(73,51,43,.12);
+}
+.hero-card{
+  min-height:440px;
+  display:grid;
+  place-items:center;
+  background:
+    linear-gradient(rgba(255,253,251,.58),rgba(244,232,227,.58)),
+    url("imagine-logo.jpeg") center / 85% auto no-repeat;
+}
+.logo-watermark{
+  position:absolute;
+  right:5%;
+  bottom:7%;
+  width:220px;
+  opacity:.08;
+  pointer-events:none;
+}
+@media(max-width:800px){
+  body::before{
+    background:
+      linear-gradient(rgba(248,243,238,.93),rgba(248,243,238,.93)),
+      url("imagine-logo.jpeg") center 18% / 88vw auto no-repeat;
+  }
+  .brand img{width:145px}
+}
+
+</style>
+</head>
+<body>
+<nav>
+  <div class="container nav-inner">
+    <a class="brand" href="#top"><img src="imagine-logo.jpeg" alt="Imagine — Made from your memories"></a>
+    <div class="navlinks"><a href="#products" data-i18n="navProducts">Products</a><a href="#pricing" data-i18n="navPricing">Pricing</a><a href="#examples" data-i18n="navExamples">Examples</a><a href="#portfolio" data-i18n="navPortfolio">Portfolio</a><a href="#order" data-i18n="navOrder">Order</a><div class="lang"><button id="enBtn" class="active">EN</button><button id="ptBtn">PT</button></div></div>
+  </div>
+</nav>
+
+<main id="top">
+<section class="hero">
+ <div class="container hero-grid">
+  <div>
+   <div class="kicker" data-i18n="heroKicker">Personalized keepsakes</div>
+   <h1>Made from<br>your memories.</h1>
+   <p data-i18n="heroText">Turn your favorite photos into beautiful personalized magnets and buttons — simple, meaningful, and made to keep your memories close.</p>
+   <div class="cta"><a class="btn btn-primary" href="#order" data-i18n="orderBtn">Make an order</a><a class="btn btn-light" href="#products" data-i18n="seeProducts">See products</a></div>
+  </div>
+  <div class="hero-card">
+   <div class="photo-grid">
+    <div class="photo tall">YOUR PHOTO</div>
+    <div class="photo">MAGNET</div>
+    <div class="photo">BUTTON</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="products">
+  <img class="logo-watermark" src="imagine-logo.jpeg" alt="" aria-hidden="true">
+ <div class="container">
+  <div class="section-head"><div><div class="kicker" data-i18n="productsKicker">What we make</div><h2 data-i18n="productsTitle">Simple things.<br>Special memories.</h2></div><p data-i18n="productsText">Choose magnets, buttons, or a mix of both. Send your photos and we’ll turn them into keepsakes.</p></div>
+  <div class="products">
+   <article class="product">
+    <div class="product-image photo-showcase">
+      <div class="mock-photo family">FAMILY<br><small>favorite moments</small></div>
+      <div class="shape-badge circle">ROUND</div>
+      <div class="shape-badge square">SQUARE</div>
+    </div>
+    <h3 data-i18n="magnetsTitle">Photo Magnets</h3>
+    <p data-i18n="magnetsText">Personalized refrigerator magnets made from your favorite photos.</p>
+    <a class="btn btn-primary" href="#order" data-i18n="orderMagnets">Order magnets</a>
+   </article>
+   <article class="product">
+    <div class="product-image photo-showcase">
+      <div class="mock-photo travel">TRAVEL<br><small>places worth remembering</small></div>
+      <div class="shape-badge circle">ROUND</div>
+      <div class="shape-badge square">SQUARE</div>
+    </div>
+    <h3 data-i18n="buttonsTitle">Photo Buttons</h3>
+    <p data-i18n="buttonsText">Custom buttons featuring your photos, memories, art, or message.</p>
+    <a class="btn btn-primary" href="#order" data-i18n="orderButtons">Order buttons</a>
+   </article>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="pricing">
+ <div class="container">
+  <div class="section-head"><div><div class="kicker" data-i18n="pricingKicker">Pricing</div><h2 data-i18n="pricingTitle">Pick your quantity.</h2></div><p data-i18n="pricingText">Magnets and buttons follow the same package pricing. You can also mix the two.</p></div>
+  <div class="pricing">
+   <div class="price"><strong>9 — $24.99</strong><span data-i18n="magnetsOrButtons">Magnets or buttons</span></div>
+   <div class="price"><strong>12 — $31.99</strong><span data-i18n="magnetsOrButtons">Magnets or buttons</span></div>
+   <div class="price"><strong>18 — $44.99</strong><span data-i18n="magnetsOrButtons">Magnets or buttons</span></div>
+   <div class="price"><strong>24 — $56.99</strong><span data-i18n="magnetsOrButtons">Magnets or buttons</span></div>
+   <div class="price"><strong>36 — $79.99</strong><span data-i18n="magnetsOrButtons">Magnets or buttons</span></div>
+   <div class="price"><strong>50 — $99.00</strong><span data-i18n="magnetsOrButtons">Magnets or buttons</span></div>
+  </div>
+  <div class="custom" style="margin-top:16px"><div class="kicker" style="color:#bfc8c1" data-i18n="over50">50+ pieces</div><h2 style="margin-top:7px">Only $2 each.</h2><p data-i18n="over50Text">For orders above 50 pieces, each additional piece is $2.</p></div>
+ </div>
+</section>
+
+<section class="section" id="examples">
+ <div class="container">
+  <div class="section-head"><div><div class="kicker" data-i18n="examplesKicker">Inspiration</div><h2 data-i18n="examplesTitle">Choose a memory.<br>Choose a shape.</h2></div><p data-i18n="examplesText">These are sample styles to help customers imagine what their own photos can look like as a round or square magnet.</p></div>
+  <div class="example-grid">
+   <article class="example-card"><div class="example-art family-art"><div class="round-magnet">FAMILY</div><div class="square-magnet">FAMILY</div></div><h3 data-i18n="familyExample">Family memories</h3><p data-i18n="familyText">Birthdays, everyday moments, family portraits and celebrations.</p></article>
+   <article class="example-card"><div class="example-art travel-art"><div class="round-magnet">TRAVEL</div><div class="square-magnet">TRAVEL</div></div><h3 data-i18n="travelExample">Places & adventures</h3><p data-i18n="travelText">Vacations, favorite cities, beaches, landmarks and unforgettable trips.</p></article>
+   <article class="example-card"><div class="example-art celebration-art"><div class="round-magnet">LOVE</div><div class="square-magnet">LOVE</div></div><h3 data-i18n="celebrationExample">Special moments</h3><p data-i18n="celebrationText">Weddings, graduations, babies, anniversaries and meaningful gifts.</p></article>
+   <article class="example-card"><div class="example-art pet-art"><div class="round-magnet">PET</div><div class="square-magnet">PET</div></div><h3 data-i18n="petExample">Pet memories</h3><p data-i18n="petText">Your favorite four-legged family members, made into keepsakes.</p></article>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="how">
+ <div class="container">
+  <div class="section-head"><div><div class="kicker" data-i18n="howKicker">How it works</div><h2 data-i18n="howTitle">From photo to keepsake.</h2></div></div>
+  <div class="steps">
+   <div class="step"><div class="num">01 / CHOOSE</div><h3 data-i18n="step1Title">Choose your product</h3><p data-i18n="step1Text">Pick magnets, buttons, or a combination.</p></div>
+   <div class="step"><div class="num">02 / PREVIEW</div><h3 data-i18n="step2Title">Preview your photo</h3><p data-i18n="step2Text">Use the website preview only to see how your memory will look on the product.</p></div>
+    <div class="step"><div class="num">03 / PAY</div><h3 data-i18n="step3Title">Pay & send your order</h3><p data-i18n="step3Text">After payment, click the order button and we’ll open WhatsApp so we can request your high-resolution photos.</p></div>
+   <div class="step"><div class="num">03 / CREATE</div><h3 data-i18n="step3Title">We make your order</h3><p data-i18n="step3Text">Your memories become something you can hold, display, and share.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="portfolio">
+ <div class="container">
+  <div class="section-head"><div><div class="kicker" data-i18n="portfolioKicker">Portfolio</div><h2 data-i18n="portfolioTitle">Made with memories.</h2></div><p data-i18n="portfolioText">Replace these placeholders with your real product photos.</p></div>
+  <div class="portfolio">
+   <div class="photo">PHOTO 01</div><div class="photo">PHOTO 02</div><div class="photo">PHOTO 03</div><div class="photo">PHOTO 04</div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="order">
+ <div class="container">
+  <div class="order">
+   <div class="kicker" data-i18n="orderKicker">Start your order</div>
+   <h2 data-i18n="orderTitle">Let’s make your memory.</h2>
+   <p data-i18n="orderText">Fill this out and the order details will open in WhatsApp.</p>
+   <form id="orderForm">
+    <div class="form-grid">
+     <input id="name" required placeholder="Your name" data-i18n-placeholder="namePlaceholder">
+     <input id="qty" required placeholder="Quantity (e.g. 12)" data-i18n-placeholder="qtyPlaceholder">
+    </div>
+    <div class="form-grid">
+     <select id="product" required><option value="" data-i18n="chooseProduct">Choose product</option><option>Magnets</option><option>Buttons</option><option>Mix of magnets and buttons</option></select>
+     <select id="shape" required><option value="" data-i18n="chooseShape">Choose shape</option><option data-i18n="roundShape">Round</option><option data-i18n="squareShape">Square</option><option data-i18n="bothShapes">Round + Square</option></select>
+    </div>
+    <div class="form-grid">
+     <input id="photo" placeholder="Photo / file note (optional)" data-i18n-placeholder="photoPlaceholder">
+    </div>
+    <textarea id="details" placeholder="Tell us anything important about your order" data-i18n-placeholder="detailsPlaceholder"></textarea>
+    <button class="btn btn-primary" type="submit"><span data-i18n="sendWhatsApp">I’ve paid — send my order on WhatsApp</span></button>
+   </form>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer><div class="container">© 2026 Imagine — made from your memories. &nbsp; | &nbsp; Personalized magnets & buttons. <br>High-resolution production photos are requested through WhatsApp after payment.</div></footer>
+
+
+<script>
+const translations = {
+  en: {
+    navProducts:"Products", navPricing:"Pricing", navExamples:"Examples", navPortfolio:"Portfolio", navOrder:"Order",
+    heroKicker:"Personalized keepsakes", heroText:"Turn your favorite photos into beautiful personalized magnets and buttons — simple, meaningful, and made to keep your memories close.",
+    orderBtn:"Make an order", seeProducts:"See products",
+    examplesKicker:"Inspiration", examplesTitle:"Choose a memory.<br>Choose a shape.", examplesText:"These are sample styles to help customers imagine what their own photos can look like as a round or square magnet.", familyExample:"Family memories", familyText:"Birthdays, everyday moments, family portraits and celebrations.", travelExample:"Places & adventures", travelText:"Vacations, favorite cities, beaches, landmarks and unforgettable trips.", celebrationExample:"Special moments", celebrationText:"Weddings, graduations, babies, anniversaries and meaningful gifts.", petExample:"Pet memories", petText:"Your favorite four-legged family members, made into keepsakes.", productsKicker:"What we make", productsTitle:"Simple things.<br>Special memories.", productsText:"Choose magnets, buttons, or a mix of both. Send your photos and we’ll turn them into keepsakes.",
+    magnetsTitle:"Photo Magnets", magnetsText:"Personalized refrigerator magnets made from your favorite photos.", orderMagnets:"Order magnets",
+    buttonsTitle:"Photo Buttons", buttonsText:"Custom buttons featuring your photos, memories, art, or message.", orderButtons:"Order buttons",
+    pricingKicker:"Pricing", pricingTitle:"Pick your quantity.", pricingText:"Magnets and buttons follow the same package pricing. You can also mix the two.", magnetsOrButtons:"Magnets or buttons",
+    over50:"50+ pieces", over50Text:"For orders above 50 pieces, each additional piece is $2.",
+    howKicker:"How it works", howTitle:"From photo to keepsake.", step1Title:"Choose your product", step1Text:"Pick magnets, buttons, or a combination.", step2Title:"Preview your photo", step2Text:"Use the website preview only to see how your memory will look on the product.", step3Title:"Pay & send your order", step3Text:"After payment, click the order button and we’ll open WhatsApp so we can request your high-resolution photos.",
+    portfolioKicker:"Portfolio", portfolioTitle:"Made with memories.", portfolioText:"Replace these placeholders with your real product photos.",
+    orderKicker:"Start your order", orderTitle:"Let’s make your memory.", orderText:"Complete your order and payment first. Then use the button below to open WhatsApp. We’ll ask for the high-resolution photos there.", paymentNote:"📱 <strong>Important:</strong> The photo uploaded for the website preview is only for visualization. Your production photos will be requested in high resolution through WhatsApp after payment.",
+    chooseProduct:"Choose product", chooseShape:"Choose shape", roundShape:"Round", squareShape:"Square", bothShapes:"Round + Square", sendWhatsApp:"Send order on WhatsApp",
+    namePlaceholder:"Your name", qtyPlaceholder:"Quantity (e.g. 12)", photoPlaceholder:"Photo / file note (optional)", detailsPlaceholder:"Tell us anything important about your order"
+  },
+  pt: {
+    navProducts:"Produtos", navPricing:"Preços", navExamples:"Exemplos", navPortfolio:"Portfólio", navOrder:"Pedido",
+    heroKicker:"Lembranças personalizadas", heroText:"Transforme suas fotos favoritas em lindos ímãs e bottons personalizados — simples, especiais e feitos para manter suas memórias por perto.",
+    orderBtn:"Fazer pedido", seeProducts:"Ver produtos",
+    examplesKicker:"Inspiração", examplesTitle:"Escolha uma memória.<br>Escolha um formato.", examplesText:"Estes são exemplos para ajudar o cliente a imaginar como a própria foto pode ficar em um ímã redondo ou quadrado.", familyExample:"Memórias de família", familyText:"Aniversários, momentos do dia a dia, retratos de família e comemorações.", travelExample:"Lugares e aventuras", travelText:"Viagens, cidades favoritas, praias, pontos turísticos e momentos inesquecíveis.", celebrationExample:"Momentos especiais", celebrationText:"Casamentos, formaturas, bebês, aniversários e presentes com significado.", petExample:"Memórias dos pets", petText:"Seus companheiros de quatro patas transformados em lembranças especiais.", productsKicker:"O que fazemos", productsTitle:"Coisas simples.<br>Memórias especiais.", productsText:"Escolha ímãs, bottons ou uma combinação dos dois. Envie suas fotos e nós transformaremos suas memórias em lembranças.",
+    magnetsTitle:"Ímãs com foto", magnetsText:"Ímãs personalizados para sua geladeira, feitos com suas fotos favoritas.", orderMagnets:"Pedir ímãs",
+    buttonsTitle:"Bottons com foto", buttonsText:"Bottons personalizados com suas fotos, memórias, artes ou mensagens.", orderButtons:"Pedir bottons",
+    pricingKicker:"Preços", pricingTitle:"Escolha a quantidade.", pricingText:"Ímãs e bottons seguem os mesmos valores. Você também pode misturar os dois.", magnetsOrButtons:"Ímãs ou bottons",
+    over50:"Mais de 50 peças", over50Text:"Para pedidos acima de 50 peças, cada peça adicional custa $2.",
+    howKicker:"Como funciona", howTitle:"Da foto à lembrança.", step1Title:"Escolha o produto", step1Text:"Escolha ímãs, bottons ou uma combinação.", step2Title:"Visualize sua foto", step2Text:"Use a prévia do site apenas para ver como sua memória ficará no produto.", step3Title:"Pague e envie o pedido", step3Text:"Depois do pagamento, clique no botão do pedido e o WhatsApp será aberto para pedirmos as fotos em alta resolução.",
+    portfolioKicker:"Portfólio", portfolioTitle:"Feito com memórias.", portfolioText:"Substitua estes espaços pelas fotos reais dos seus produtos.",
+    orderKicker:"Comece seu pedido", orderTitle:"Vamos transformar sua memória.", orderText:"Finalize seu pedido e pagamento primeiro. Depois use o botão abaixo para abrir o WhatsApp. Lá vamos pedir as fotos em alta resolução.", paymentNote:"📱 <strong>Importante:</strong> A foto usada na prévia do site serve apenas para visualização. As fotos para produção serão solicitadas em alta resolução pelo WhatsApp depois do pagamento.",
+    chooseProduct:"Escolha o produto", chooseShape:"Escolha o formato", roundShape:"Redondo", squareShape:"Quadrado", bothShapes:"Redondo + Quadrado", sendWhatsApp:"Enviar pedido pelo WhatsApp",
+    namePlaceholder:"Seu nome", qtyPlaceholder:"Quantidade (ex.: 12)", photoPlaceholder:"Observação sobre fotos/arquivo (opcional)", detailsPlaceholder:"Conte algo importante sobre seu pedido"
+  }
+};
+function setLanguage(lang){
+  document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
+  document.querySelectorAll("[data-i18n]").forEach(el => el.innerHTML = translations[lang][el.dataset.i18n] || el.innerHTML);
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => el.placeholder = translations[lang][el.dataset.i18nPlaceholder] || el.placeholder);
+  document.getElementById("enBtn").classList.toggle("active", lang==="en");
+  document.getElementById("ptBtn").classList.toggle("active", lang==="pt");
+  localStorage.setItem("imagineLanguage", lang);
+}
+document.getElementById("enBtn").addEventListener("click",()=>setLanguage("en"));
+document.getElementById("ptBtn").addEventListener("click",()=>setLanguage("pt"));
+setLanguage(localStorage.getItem("imagineLanguage") || "en");
+</script>
+
+<script>
+document.getElementById("orderForm").addEventListener("submit", function(e){
+ e.preventDefault();
+ const name=document.getElementById("name").value.trim();
+ const qty=document.getElementById("qty").value.trim();
+ const product=document.getElementById("product").value;
+ const shape=document.getElementById("shape").value;
+ const photo=document.getElementById("photo").value.trim();
+ const details=document.getElementById("details").value.trim();
+ const lang = localStorage.getItem("imagineLanguage") || "en";
+ const msg = lang === "pt" ?
+ `Olá Imagine! Gostaria de fazer um pedido.%0A%0A`+
+ `Nome: ${encodeURIComponent(name)}%0A`+
+ `Produto: ${encodeURIComponent(product)}%0A`+
+ `Formato: ${encodeURIComponent(shape)}%0A`+
+ `Quantidade: ${encodeURIComponent(qty)}%0A`+
+ `Observação sobre fotos: ${encodeURIComponent(photo || "Vou enviar as fotos pelo WhatsApp.")}%0A`+
+ `Detalhes: ${encodeURIComponent(details || "Nenhum")}` :
+ `Hello Imagine! I'd like to place an order.%0A%0A`+
+ `Name: ${encodeURIComponent(name)}%0A`+
+ `Product: ${encodeURIComponent(product)}%0A`+
+ `Shape: ${encodeURIComponent(shape)}%0A`+
+ `Quantity: ${encodeURIComponent(qty)}%0A`+
+ `Photo note: ${encodeURIComponent(photo || "I'll send the photos on WhatsApp.")}%0A`+
+ `Details: ${encodeURIComponent(details || "None")}`;
+ window.open(`https://wa.me/19784939798?text=${msg}`,"_blank");
+});
+</script>
+</body>
+</html>
